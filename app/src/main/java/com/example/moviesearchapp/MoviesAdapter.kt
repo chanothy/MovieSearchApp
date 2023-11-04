@@ -4,25 +4,26 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.moviesearchapp.databinding.RestaurantItemBinding
 import com.example.moviesearchapp.model.YelpRestaurant
+import retrofit2.Callback
 
 
-class MoviesAdapter(val context: Context) :
-    ListAdapter<YelpRestaurant, MoviesAdapter.ItemViewHolder>(MovieDiffItemCallback()) {
+class MoviesAdapter(val context: Context, private val restaurant: YelpRestaurant) :
+    RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : ItemViewHolder = ItemViewHolder.inflateFrom(parent)
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, context)
+    override fun getItemCount(): Int {
+        return 1
     }
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        holder.bind(restaurant, context)
+    }
+
 
     class ItemViewHolder(val binding: RestaurantItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
