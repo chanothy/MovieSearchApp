@@ -5,6 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.moviesearchapp.databinding.RestaurantItemBinding
 import com.example.moviesearchapp.model.YelpRestaurant
 import retrofit2.Callback
@@ -45,15 +49,15 @@ class MoviesAdapter(val context: Context, private val restaurant: YelpRestaurant
 //            binding.tvCategory.text = restaurant.rating
 //            binding.tvDistance.text = restaurant.displayDistance()
 //            binding.tvPrice.text = restaurant.price
-//            Glide.with(context).load(restaurant.imageUrl).into(binding.imageView)
+            Glide.with(context).load(restaurant.imageUrl).into(binding.imageView)
 
-//            Glide.with(context).load(restaurant.imageUrl)
-//                .apply(
-//                    RequestOptions().transform(
-//                        CenterCrop(), RoundedCorners(20)
-//                    )
-//                )
-//                .into(binding.imageView)
+            Glide.with(context).load(restaurant.imageUrl)
+                .apply(
+                    RequestOptions().transform(
+                        CenterCrop(), RoundedCorners(20)
+                    )
+                )
+                .into(binding.imageView)
 
 
         }
