@@ -1,12 +1,17 @@
 package com.example.moviesearchapp
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesearchapp.model.YelpRestaurant
+import com.example.moviesearchapp.model.MovieInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,8 +51,8 @@ class MainActivity : AppCompatActivity() {
             if (searchTV.text.toString() != "") {
                 val movieTitle = searchTV.text.toString()
                 movieService.searchRestaurants( movieTitle, "$API_KEY").enqueue(object :
-                    Callback<YelpRestaurant> {
-                    override fun onResponse(call: Call<YelpRestaurant>, response: Response<YelpRestaurant>) {
+                    Callback<MovieInfo> {
+                    override fun onResponse(call: Call<MovieInfo>, response: Response<MovieInfo>) {
                         Log.i(TAG, "onResponse $response")
                         val body = response.body()
                         val adapter = body?.let { MoviesAdapter(this@MainActivity, it) }
@@ -61,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 //                adapter.submitList(body.movies)
                     }
 
-                    override fun onFailure(call: Call<YelpRestaurant>, t: Throwable) {
+                    override fun onFailure(call: Call<MovieInfo>, t: Throwable) {
                         Log.i(TAG, "onFailure $t")
                     }
                 })
@@ -74,11 +79,46 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    private val sendEmail =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                Log.d("Feedback","sent")
+                Toast.makeText(this, "Feedback sent", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.d("Feedback","failed")
+                Toast.makeText(this, "Feedback not sent", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun sendFeedback() {
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.type = "message/rfc822"
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("timchan@iu.edu"))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for IMDBish")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Enter feedback here")
+
+        val chooser = Intent.createChooser(emailIntent, "Send email using...")
+        sendEmail.launch(chooser)
+    }
+
+    private fun share() {
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.type = "message/rfc822"
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("timchan@iu.edu"))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I'm sharing this movie: " + binding.movieSearchTV.text.toString())
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out: " + binding.movieSearchTV.text.toString())
+
+        val chooser = Intent.createChooser(emailIntent, "Send email using...")
+        sendEmail.launch(chooser)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.feedbackButton -> {
                 Log.d("Feedback","button clicked")
-
+                sendFeedback()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

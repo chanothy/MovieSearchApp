@@ -1,6 +1,6 @@
 package com.example.moviesearchapp
 
-import com.example.moviesearchapp.model.YelpRestaurant
+import com.example.moviesearchapp.model.MovieInfo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,5 +11,5 @@ public interface MovieService {
     fun searchRestaurants(
         @Query("t") searchTerm: String,
         @Query("apikey") apikey: String
-    ) : Call<YelpRestaurant>
+    ) : Call<MovieInfo>
 }

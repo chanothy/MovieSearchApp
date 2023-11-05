@@ -1,20 +1,23 @@
 package com.example.moviesearchapp
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.moviesearchapp.databinding.RestaurantItemBinding
-import com.example.moviesearchapp.model.YelpRestaurant
-import retrofit2.Callback
+import com.example.moviesearchapp.model.MovieInfo
 
 
-class MoviesAdapter(val context: Context, private val restaurant: YelpRestaurant) :
+class MoviesAdapter(val context: Context, private val restaurant: MovieInfo) :
     RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -40,17 +43,19 @@ class MoviesAdapter(val context: Context, private val restaurant: YelpRestaurant
             }
         }
 
-        fun bind(restaurant: YelpRestaurant, context: Context) {
+        fun bind(restaurant: MovieInfo, context: Context) {
             binding.tvName.text = restaurant.Title
-            Log.d("title",restaurant.Title)
-//            binding.ratingBar.rating = restaurant.rating
-//            binding.tvNumReviews.text = "${restaurant.numReviews} Reviews"
-            binding.tvAddress.text = restaurant.Year
-//            binding.tvCategory.text = restaurant.rating
-//            binding.tvDistance.text = restaurant.displayDistance()
-//            binding.tvPrice.text = restaurant.price
-            Glide.with(context).load(restaurant.imageUrl).into(binding.imageView)
+            binding.tvIMDBrating.text = "IMDb Rating: " + restaurant.rating
+            binding.tvPGRating.text = restaurant.Rated
+            binding.tvYear.text = restaurant.Year
+            binding.tvIMDBLink.text = "https://www.imdb.com/title/${restaurant.link}/"
 
+            binding.tvIMDBLink.setOnClickListener {
+                Log.d("link",binding.tvIMDBLink.text.toString())
+                openLink(context,binding.tvIMDBLink.text.toString())
+            }
+
+            Glide.with(context).load(restaurant.imageUrl).into(binding.imageView)
             Glide.with(context).load(restaurant.imageUrl)
                 .apply(
                     RequestOptions().transform(
@@ -58,10 +63,12 @@ class MoviesAdapter(val context: Context, private val restaurant: YelpRestaurant
                     )
                 )
                 .into(binding.imageView)
-
-
         }
 
+        fun openLink(context: Context, url: String) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            context.startActivity(intent)
+        }
 
     }
 }
