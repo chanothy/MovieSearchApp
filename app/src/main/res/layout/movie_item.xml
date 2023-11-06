@@ -38,7 +38,7 @@
         <TextView
             android:id="@+id/tvYear"
             style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="19dp"
             android:layout_marginTop="4dp"
             android:numStars="5"
@@ -46,6 +46,20 @@
             android:stepSize="0.5"
             android:text="0000"
             app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <TextView
+            android:id="@+id/tvRunningTime"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:rating="4.5"
+            android:stepSize="0.5"
+            android:text="0000"
+            app:layout_constraintStart_toEndOf="@+id/tvPGRating"
             app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
         <TextView
@@ -79,11 +93,23 @@
             tools:text="Link" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/shareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_share_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="15dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvIMDBLink"
+            app:layout_constraintStart_toEndOf="@+id/tvIMDBrating"
+            app:layout_constraintTop_toBottomOf="@+id/tvPGRating"
+            app:srcCompat="@drawable/baseline_star_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

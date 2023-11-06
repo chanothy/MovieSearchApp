@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                             return
                         }
                         Log.d("test", body.toString())
-//                adapter.submitList(body.movies)
                     }
 
                     override fun onFailure(call: Call<MovieInfo>, t: Throwable) {
@@ -74,11 +73,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // set up toolbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    private val shareLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            Log.d("Share", "sent")
+        } else {
+            Log.d("Share", "failed")
+        }
+    }
+
+    // send email process
     private val sendEmail =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -90,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    // send email and set up texts
     private fun sendFeedback() {
         val emailIntent = Intent(Intent.ACTION_SEND)
         emailIntent.type = "message/rfc822"
@@ -102,18 +112,7 @@ class MainActivity : AppCompatActivity() {
         sendEmail.launch(chooser)
     }
 
-    private fun share() {
-        val emailIntent = Intent(Intent.ACTION_SEND)
-        emailIntent.type = "message/rfc822"
-
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("timchan@iu.edu"))
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I'm sharing this movie: " + binding.movieSearchTV.text.toString())
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out: " + binding.movieSearchTV.text.toString())
-
-        val chooser = Intent.createChooser(emailIntent, "Send email using...")
-        sendEmail.launch(chooser)
-    }
-
+    // toolbar selects
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.feedbackButton -> {
