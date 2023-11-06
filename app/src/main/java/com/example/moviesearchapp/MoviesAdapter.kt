@@ -18,6 +18,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.moviesearchapp.databinding.MovieItemBinding
 import com.example.moviesearchapp.model.MovieInfo
 
+/**
+ * Adapter manages the recycler view
+ * @param context - interface that contains info about current environment
+ * @param movie - movie information parsed from API requests
+ */
 
 class MoviesAdapter(val context: Context, private val movie: MovieInfo) :
     RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {

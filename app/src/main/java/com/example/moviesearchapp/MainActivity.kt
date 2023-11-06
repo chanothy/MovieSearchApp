@@ -20,6 +20,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import com.example.moviesearchapp.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
 
+/**
+ * MainActivity for MovieSearchApp
+ *
+ * Contains search functionality through Retrofit.
+ * Connects to adapter that manages the recycler view for displaying search results.
+ * Contains setup for toolbar.
+ *
+ * @author Timothy Chan
+ */
+
 private const val BASE_URL = "https://www.omdbapi.com/"
 private const val API_KEY = "c3830d88"
 class MainActivity : AppCompatActivity() {
@@ -74,17 +84,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     // set up toolbar
+    /**
+     * Creates toolbar
+     * @param menu - menu item
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
         return super.onCreateOptionsMenu(menu)
-    }
-
-    private val shareLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            Log.d("Share", "sent")
-        } else {
-            Log.d("Share", "failed")
-        }
     }
 
     // send email process
@@ -113,6 +119,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     // toolbar selects
+    /**
+     * Manages toolbar buttons
+     * @param item - button item in the toolbar
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.feedbackButton -> {
