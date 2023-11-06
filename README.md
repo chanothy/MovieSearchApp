@@ -25,13 +25,13 @@ The following **extensions** are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='walkthrough.gif' title='Video Walkthrough' width='50%' alt='Video Walkthrough' />
+<img src='https://github.com/chanothy/MovieSearchApp/blob/master/movieSearchAppDemo.gif' title='Video Walkthrough' width='50%' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-It was difficult getting the intents to work because I needed a context. It was also a little confusing how to pare the JSON data because I initially did valid calls, but I didn't parse the data correctly with a correct model.
+It wasn't easy getting the intents to work because I needed a context. It was also confusing how to pare the JSON data because I initially did valid calls, but I didn't parse the data correctly with a correct model.
 
 ## License
 
