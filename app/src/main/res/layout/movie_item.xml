@@ -18,9 +18,10 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="226dp"
+            android:layout_height="26dp"
             android:layout_marginStart="8dp"
+            android:maxLines="3"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageView"
